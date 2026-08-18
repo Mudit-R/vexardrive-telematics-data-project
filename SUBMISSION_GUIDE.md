@@ -15,9 +15,9 @@ This document provides exact, copy-paste ready answers and preparation steps for
 | **Official Mail Id** | `mudit14127@gmail.com` | Official communication email |
 | **Wellfound Profile link** | `https://wellfound.com/u/mudit-rungta` *(or your profile URL)* | Add your Wellfound URL |
 | **Resume** | Upload `Mudit_Rungta.pdf` (available in your local files) | PDF upload under 10MB |
-| **GitHub repository Link** | `https://github.com/<your-username>/vexardrive-telematics-analytics` | Push the repository to GitHub |
+| **GitHub repository Link** | `https://github.com/Mudit-R/vexardrive-telematics-data-project` | Push the repository to GitHub |
 | **Drive Link (Technical Report & Images)** | `https://drive.google.com/drive/folders/<your-shared-folder-link>?usp=sharing` | See Drive Setup section below |
-| **Dashboard Link (If hosted)** | `https://<your-username>.github.io/vexardrive-telematics-analytics/` *(or localhost / Netlify / Vercel link)* | Free hosting via GitHub Pages |
+| **Dashboard Link (If hosted)** | `https://mudit-r.github.io/vexardrive-telematics-data-project/` | Free hosting via GitHub Pages |
 | **Mention the AI tools used (if any)** | *See AI Tools Justification text below* | Ready-to-copy response |
 | **When would you be able to join?** | `Immediately` *(or within 1 week / as required)* | Your joining availability |
 | **Expected stipend (Per month)** | `₹25,000 - ₹35,000 / month` *(or as per your expectation)* | Standard market range |
