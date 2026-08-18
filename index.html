@@ -8,7 +8,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800;900&display=swap" rel="stylesheet">
   
   <!-- Leaflet GIS & ChartJS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -16,20 +16,20 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- Boron Neubrutalism App Stylesheet -->
+  <!-- Neobrutalism App Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <div class="wrapper">
-    <!-- Boron Sidenav Menu Start -->
+    <!-- Neobrutalism Sidenav Menu Start -->
     <aside class="sidenav-menu">
       <div class="brand-logo">
         <div class="brand-icon">
           <i data-lucide="zap"></i>
         </div>
         <div class="brand-title">
-          VexarDrive <span>BORON</span>
+          VexarDrive <span>NEO</span>
         </div>
       </div>
 
@@ -104,7 +104,7 @@
 
     <!-- Main Content Wrapper -->
     <div class="main-wrapper">
-      <!-- Boron Top Navbar -->
+      <!-- Neobrutalism Top Navbar -->
       <header class="top-navbar">
         <div class="nav-left">
           <div class="breadcrumb">
@@ -121,7 +121,7 @@
             <i data-lucide="search" style="width:16px; height:16px;"></i>
             <input type="text" id="global-search" placeholder="Search driver, vehicle or trip...">
           </div>
-          <button class="btn-boron btn-boron-primary" onclick="showJustificationModal()">
+          <button class="btn-neo btn-neo-main" onclick="showJustificationModal()">
             <i data-lucide="help-circle" style="width:16px; height:16px;"></i>
             <span>Metric Formulas</span>
           </button>
@@ -136,23 +136,23 @@
             <h1 id="page-title">Driver Behaviour & Safety Dashboard</h1>
             <p id="page-subtitle">Granular IMU & GPS telematics risk scoring across 30 fleet delivery riders</p>
           </div>
-          <div class="boron-tag" id="last-updated-tag">
+          <div class="neo-tag" id="last-updated-tag">
             Live Stream: 450 Trips Processed
           </div>
         </div>
 
-        <!-- Neubrutal Stat Cards Strip -->
+        <!-- Stat Cards Strip -->
         <section class="stat-cards-grid" id="summary-strip">
           <!-- Injected dynamically via app.js -->
         </section>
 
         <!-- TAB 1: DRIVER BEHAVIOUR DASHBOARD -->
         <div class="tab-pane active" id="driver-dashboard">
-          <!-- Boron Controls Bar -->
-          <div class="boron-controls">
-            <div style="display:flex; gap:1rem; align-items:center; flex-wrap:wrap;">
+          <!-- Neobrutalism Controls Bar -->
+          <div class="neo-controls">
+            <div style="display:flex; gap:1.2rem; align-items:center; flex-wrap:wrap;">
               <div class="filter-item">
-                <span><i data-lucide="filter" style="width:15px; height:15px; vertical-align:middle;"></i> Risk Tier:</span>
+                <span><i data-lucide="filter" style="width:16px; height:16px; vertical-align:middle;"></i> Risk Tier:</span>
                 <select id="driver-risk-filter" class="filter-select">
                   <option value="all">All Risk Tiers (30 Drivers)</option>
                   <option value="Low">Safe & Exemplary (Score ≥ 82)</option>
@@ -162,7 +162,7 @@
               </div>
 
               <div class="filter-item">
-                <span><i data-lucide="map-pin" style="width:15px; height:15px; vertical-align:middle;"></i> Delivery Zone:</span>
+                <span><i data-lucide="map-pin" style="width:16px; height:16px; vertical-align:middle;"></i> Delivery Zone:</span>
                 <select id="driver-zone-filter" class="filter-select">
                   <option value="all">All Zones</option>
                   <option value="Central">Central</option>
@@ -174,8 +174,8 @@
               </div>
             </div>
 
-            <div style="display:flex; align-items:center; gap:0.75rem;">
-              <span style="font-size:0.78rem; font-weight:700;" id="driver-count-badge">30 Drivers</span>
+            <div style="display:flex; align-items:center; gap:0.85rem;">
+              <span style="font-size:0.82rem; font-weight:900;" id="driver-count-badge">30 Drivers</span>
               <div class="view-btn-group">
                 <button class="view-btn active" id="btn-driver-cards" onclick="setDriverView('cards')">
                   <i data-lucide="grid" style="width:14px; height:14px;"></i> Cards
@@ -187,25 +187,45 @@
             </div>
           </div>
 
-          <!-- Driver Charts Row -->
+          <!-- Driver Charts Row (neobrutalism.dev style) -->
           <div class="grid-2">
-            <div class="boron-card">
-              <div class="boron-card-header">
-                <h3><i data-lucide="bar-chart-2"></i> Safety Score Distribution & Cohorts</h3>
-                <span class="boron-tag">Fleet Benchmark</span>
+            <div class="neo-chart-card">
+              <div class="neo-chart-header">
+                <div class="neo-chart-title-group">
+                  <h3><i data-lucide="bar-chart-2"></i> Safety Score Distribution</h3>
+                  <p>Cohort breakdown across 30 fleet delivery riders</p>
+                </div>
+                <span class="side-badge badge-green">Fleet Benchmark</span>
               </div>
               <div class="chart-box">
                 <canvas id="driverScoreDistChart"></canvas>
               </div>
+              <div class="neo-chart-footer">
+                <div class="trend-badge">
+                  <i data-lucide="trending-up" style="width:14px; height:14px; color:#000;"></i>
+                  <span>63.3% in Safe Tier</span>
+                </div>
+                <div style="color:var(--text-muted);">Normalized / 100km</div>
+              </div>
             </div>
 
-            <div class="boron-card">
-              <div class="boron-card-header">
-                <h3><i data-lucide="radar"></i> Telematics Risk Dimensions (Safe vs Risky)</h3>
-                <span class="boron-tag">5-Axis IMU Radar</span>
+            <div class="neo-chart-card">
+              <div class="neo-chart-header">
+                <div class="neo-chart-title-group">
+                  <h3><i data-lucide="radar"></i> 5-Axis Telematics Risk Radar</h3>
+                  <p>Safe cohort vs. High-Risk cohort comparison</p>
+                </div>
+                <span class="side-badge badge-purple">IMU + GPS Profile</span>
               </div>
               <div class="chart-box">
                 <canvas id="driverRadarChart"></canvas>
+              </div>
+              <div class="neo-chart-footer">
+                <div class="trend-badge">
+                  <i data-lucide="activity" style="width:14px; height:14px; color:#000;"></i>
+                  <span>Maneuver Severity</span>
+                </div>
+                <div style="color:var(--text-muted);">G-force Dynamics</div>
               </div>
             </div>
           </div>
@@ -218,11 +238,11 @@
 
         <!-- TAB 2: VEHICLE HEALTH DASHBOARD -->
         <div class="tab-pane" id="vehicle-dashboard">
-          <!-- Boron Controls Bar -->
-          <div class="boron-controls">
-            <div style="display:flex; gap:1rem; align-items:center; flex-wrap:wrap;">
+          <!-- Neobrutalism Controls Bar -->
+          <div class="neo-controls">
+            <div style="display:flex; gap:1.2rem; align-items:center; flex-wrap:wrap;">
               <div class="filter-item">
-                <span><i data-lucide="alert-triangle" style="width:15px; height:15px; vertical-align:middle;"></i> Urgency:</span>
+                <span><i data-lucide="alert-triangle" style="width:16px; height:16px; vertical-align:middle;"></i> Urgency:</span>
                 <select id="vehicle-urgency-filter" class="filter-select">
                   <option value="all">All Statuses (30 Vehicles)</option>
                   <option value="Immediate">Critical Maintenance (< 60)</option>
@@ -232,7 +252,7 @@
               </div>
 
               <div class="filter-item">
-                <span><i data-lucide="zap" style="width:15px; height:15px; vertical-align:middle;"></i> Powertrain:</span>
+                <span><i data-lucide="zap" style="width:16px; height:16px; vertical-align:middle;"></i> Powertrain:</span>
                 <select id="vehicle-type-filter" class="filter-select">
                   <option value="all">All Powertrains</option>
                   <option value="ICE Scooter">ICE Scooter</option>
@@ -242,8 +262,8 @@
               </div>
             </div>
 
-            <div style="display:flex; align-items:center; gap:0.75rem;">
-              <span style="font-size:0.78rem; font-weight:700;" id="vehicle-count-badge">30 Vehicles</span>
+            <div style="display:flex; align-items:center; gap:0.85rem;">
+              <span style="font-size:0.82rem; font-weight:900;" id="vehicle-count-badge">30 Vehicles</span>
               <div class="view-btn-group">
                 <button class="view-btn active" id="btn-vehicle-cards" onclick="setVehicleView('cards')">
                   <i data-lucide="grid" style="width:14px; height:14px;"></i> Cards
@@ -255,25 +275,45 @@
             </div>
           </div>
 
-          <!-- Vehicle Charts Row -->
+          <!-- Vehicle Charts Row (neobrutalism.dev style) -->
           <div class="grid-2">
-            <div class="boron-card">
-              <div class="boron-card-header">
-                <h3><i data-lucide="activity"></i> Vibration RMS vs. Gyro Jitter (Wear Matrix)</h3>
-                <span class="boron-tag">Degradation Scatter</span>
+            <div class="neo-chart-card">
+              <div class="neo-chart-header">
+                <div class="neo-chart-title-group">
+                  <h3><i data-lucide="activity"></i> Vibration RMS vs. Gyro Jitter</h3>
+                  <p>Mechanical wear matrix isolating chassis damping & wheel wobble</p>
+                </div>
+                <span class="side-badge badge-orange">Scatter Triage</span>
               </div>
               <div class="chart-box">
                 <canvas id="vehicleScatterChart"></canvas>
               </div>
+              <div class="neo-chart-footer">
+                <div class="trend-badge">
+                  <i data-lucide="alert-circle" style="width:14px; height:14px; color:#000;"></i>
+                  <span>6 Units Need Urgent Inspection</span>
+                </div>
+                <div style="color:var(--text-muted);">Sensor Thresholds</div>
+              </div>
             </div>
 
-            <div class="boron-card">
-              <div class="boron-card-header">
-                <h3><i data-lucide="pie-chart"></i> Fleet Health Status & Wear Breakdown</h3>
-                <span class="boron-tag">Triage Ratio</span>
+            <div class="neo-chart-card">
+              <div class="neo-chart-header">
+                <div class="neo-chart-title-group">
+                  <h3><i data-lucide="pie-chart"></i> Fleet Health Status Breakdown</h3>
+                  <p>Maintenance urgency distribution across 30 vehicles</p>
+                </div>
+                <span class="side-badge badge-yellow">Triage Ratio</span>
               </div>
               <div class="chart-box">
                 <canvas id="vehicleHealthPieChart"></canvas>
+              </div>
+              <div class="neo-chart-footer">
+                <div class="trend-badge">
+                  <i data-lucide="check-circle" style="width:14px; height:14px; color:#000;"></i>
+                  <span>56.7% in Optimal Health</span>
+                </div>
+                <div style="color:var(--text-muted);">30 Fleet Assets</div>
               </div>
             </div>
           </div>
@@ -286,9 +326,9 @@
 
         <!-- TAB 3: TRIP TELEMETRY DRILLDOWN -->
         <div class="tab-pane" id="trip-explorer">
-          <div class="boron-controls">
+          <div class="neo-controls">
             <div class="filter-item">
-              <span><i data-lucide="play-circle" style="width:16px; height:16px; vertical-align:middle;"></i> Select Sample Trip for Replay & IMU Waveform:</span>
+              <span><i data-lucide="play-circle" style="width:18px; height:18px; vertical-align:middle;"></i> Select Sample Trip for Replay & IMU Waveform:</span>
               <select id="trip-select" class="filter-select">
                 <option value="T001">Trip T001 (Driver D01 | Honda Activa - Smooth Urban Run)</option>
                 <option value="T046">Trip T046 (Driver D04 | Bajaj Pulsar - High Aggression & Overspeed)</option>
@@ -298,59 +338,89 @@
             </div>
           </div>
 
-          <div class="boron-card" id="trip-meta-banner" style="margin-bottom:1.5rem; padding:1.2rem;">
+          <div class="neo-card" id="trip-meta-banner" style="margin-bottom:1.75rem; padding:1.25rem;">
             <!-- Injected via JS -->
           </div>
 
           <div class="grid-2">
-            <div class="boron-card">
-              <div class="boron-card-header">
-                <h3><i data-lucide="map"></i> Route GPS Trace & High-G Telematics Hotspots</h3>
-                <span class="boron-tag">Leaflet GIS Engine</span>
+            <div class="neo-chart-card">
+              <div class="neo-chart-header">
+                <div class="neo-chart-title-group">
+                  <h3><i data-lucide="map"></i> Route GPS Trace & High-G Hotspots</h3>
+                  <p>Leaflet GIS map with harsh braking and pothole markers</p>
+                </div>
+                <span class="side-badge badge-blue">GIS Engine</span>
               </div>
-              <div id="trip-map" style="height: 360px; border: 2px solid #181c32; border-radius: 8px;"></div>
+              <div id="trip-map" style="height: 340px; border: 2px solid #000; border-radius: 8px;"></div>
+              <div class="neo-chart-footer">
+                <div class="trend-badge">
+                  <i data-lucide="map-pin" style="width:14px; height:14px; color:#000;"></i>
+                  <span>Live Waypoints</span>
+                </div>
+                <div style="color:var(--text-muted);">1-Min GPS Fixes</div>
+              </div>
             </div>
 
-            <div class="boron-card">
-              <div class="boron-card-header">
-                <h3><i data-lucide="trending-up"></i> Speed & Longitudinal Acceleration (Ay)</h3>
-                <span class="boron-tag">Dual-Axis Time Series</span>
+            <div class="neo-chart-card">
+              <div class="neo-chart-header">
+                <div class="neo-chart-title-group">
+                  <h3><i data-lucide="trending-up"></i> Speed & Longitudinal Accel (Ay)</h3>
+                  <p>Dual-axis time-series waveform</p>
+                </div>
+                <span class="side-badge badge-orange">Dynamics</span>
               </div>
-              <div class="chart-box" style="height: 360px;">
+              <div class="chart-box" style="height: 340px;">
                 <canvas id="tripTelemetryChart"></canvas>
+              </div>
+              <div class="neo-chart-footer">
+                <div class="trend-badge">
+                  <i data-lucide="zap" style="width:14px; height:14px; color:#000;"></i>
+                  <span>Throttle & Decel</span>
+                </div>
+                <div style="color:var(--text-muted);">m/s² vs km/h</div>
               </div>
             </div>
           </div>
 
-          <div class="boron-card">
-            <div class="boron-card-header">
-              <h3><i data-lucide="waveform"></i> 3-Axis IMU Acceleration (Ax, Ay, Az) & Gyroscope Waveforms</h3>
-              <span class="boron-tag">Raw Signal Spectrogram</span>
+          <div class="neo-chart-card">
+            <div class="neo-chart-header">
+              <div class="neo-chart-title-group">
+                <h3><i data-lucide="waveform"></i> 3-Axis IMU Acceleration (Ax, Ay, Az) & Gyroscope</h3>
+                <p>High-resolution raw sensor waveform showing chassis vibration & turning roll</p>
+              </div>
+              <span class="side-badge badge-purple">Spectrogram</span>
             </div>
-            <div class="chart-box" style="height: 300px;">
+            <div class="chart-box" style="height: 290px;">
               <canvas id="tripImuChart"></canvas>
+            </div>
+            <div class="neo-chart-footer">
+              <div class="trend-badge">
+                <i data-lucide="radio" style="width:14px; height:14px; color:#000;"></i>
+                <span>Vertical G + Yaw Rate</span>
+              </div>
+              <div style="color:var(--text-muted);">Orthogonal Vectors</div>
             </div>
           </div>
         </div>
 
         <!-- TAB 4: STRATEGIC FUTURE USE-CASES -->
         <div class="tab-pane" id="strategic-usecases">
-          <div class="boron-card" style="background:var(--boron-yellow); margin-bottom:2rem;">
-            <div style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.4rem;">
+          <div class="neo-card" style="background:var(--chart-3); margin-bottom:2rem;">
+            <div style="font-size:0.75rem; font-weight:900; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.4rem;">
               Enterprise Data Science Horizon
             </div>
-            <h2 style="font-size:1.5rem; font-weight:900; letter-spacing:-0.03em; color:var(--boron-dark);">
+            <h2 style="font-size:1.6rem; font-weight:900; letter-spacing:-0.03em; color:#000000;">
               Transforming 2-Wheeler Fleet Telematics into Scalable Revenue Products
             </h2>
-            <p style="font-size:0.9rem; font-weight:600; color:var(--boron-dark); margin-top:0.4rem; max-width:860px; line-height:1.5;">
+            <p style="font-size:0.92rem; font-weight:700; color:#000000; margin-top:0.4rem; max-width:880px; line-height:1.55;">
               Beyond Driver Safety and Vehicle Maintenance, minute-level GPS + IMU mobile telemetry unlocks high-margin data products across commercial insurance underwriting, municipal infrastructure monitoring, delivery dispatch optimization, and EV fleet electrification.
             </p>
           </div>
 
-          <div class="usecase-boron-grid">
+          <div class="usecase-neo-grid">
             <!-- Use Case 1 -->
             <div class="usecase-box">
-              <div class="usecase-header-icon" style="background:var(--boron-blue); color:#fff;">
+              <div class="usecase-header-icon" style="background:var(--chart-2); color:#000;">
                 <i data-lucide="shield-check"></i>
               </div>
               <h3>1. Dynamic Usage-Based Insurance (UBI & PHYD)</h3>
@@ -368,7 +438,7 @@
 
             <!-- Use Case 2 -->
             <div class="usecase-box">
-              <div class="usecase-header-icon" style="background:var(--boron-green); color:var(--boron-dark);">
+              <div class="usecase-header-icon" style="background:var(--chart-1); color:#000;">
                 <i data-lucide="map-pin"></i>
               </div>
               <h3>2. Crowdsourced Pothole & Road Quality GIS Map</h3>
@@ -386,7 +456,7 @@
 
             <!-- Use Case 3 -->
             <div class="usecase-box">
-              <div class="usecase-header-icon" style="background:var(--boron-orange); color:var(--boron-dark);">
+              <div class="usecase-header-icon" style="background:var(--chart-6); color:#000;">
                 <i data-lucide="clock"></i>
               </div>
               <h3>3. Hyper-Local 2-Wheeler Delivery ETA Engine</h3>
@@ -404,7 +474,7 @@
 
             <!-- Use Case 4 -->
             <div class="usecase-box">
-              <div class="usecase-header-icon" style="background:var(--boron-purple); color:#fff;">
+              <div class="usecase-header-icon" style="background:var(--chart-5); color:#000;">
                 <i data-lucide="battery-charging"></i>
               </div>
               <h3>4. EV Battery SOH & Range Forecasting</h3>
@@ -422,7 +492,7 @@
 
             <!-- Use Case 5 -->
             <div class="usecase-box">
-              <div class="usecase-header-icon" style="background:var(--boron-red); color:#fff;">
+              <div class="usecase-header-icon" style="background:var(--chart-4); color:#000;">
                 <i data-lucide="bell-ring"></i>
               </div>
               <h3>5. Automated Crash Reconstruction & eCall Safety</h3>
@@ -442,20 +512,20 @@
 
         <!-- TAB 5: METHODOLOGY & ASSUMPTIONS -->
         <div class="tab-pane" id="methodology">
-          <div class="boron-card">
-            <div class="boron-card-header">
+          <div class="neo-card">
+            <div class="neo-card-header">
               <h3><i data-lucide="calculator"></i> Mathematical Formulations & Justifications</h3>
-              <span class="boron-tag">Whitepaper Standards</span>
+              <span class="side-badge badge-green">Whitepaper Standards</span>
             </div>
 
-            <div style="background:#fafafa; border:2px solid #181c32; border-radius:8px; padding:1.25rem; margin-bottom:1.5rem; box-shadow:3px 3px 0px #181c32;">
-              <h4 style="font-size:0.95rem; font-weight:800; margin-bottom:0.5rem; color:var(--boron-dark);">
+            <div style="background:#fdf6e2; border:2px solid #000; border-radius:8px; padding:1.25rem; margin-bottom:1.5rem; box-shadow:3px 3px 0px #000;">
+              <h4 style="font-size:1rem; font-weight:900; margin-bottom:0.5rem; color:#000;">
                 1. Composite Driver Safety Score (0 - 100)
               </h4>
-              <div style="background:#fff; border:1.5px solid #181c32; padding:0.8rem 1rem; border-radius:6px; font-family:'JetBrains Mono', monospace; font-size:0.88rem; font-weight:700; color:var(--boron-dark); margin-bottom:0.8rem;">
+              <div style="background:#fff; border:2px solid #000; padding:0.8rem 1rem; border-radius:6px; font-family:'JetBrains Mono', monospace; font-size:0.88rem; font-weight:800; color:#000; margin-bottom:0.8rem; box-shadow:2px 2px 0px #000;">
                 Safety Score = 100 - min(100, 2.2·HBR<sub>100</sub> + 1.8·RAR<sub>100</sub> + 2.0·HCR<sub>100</sub> + 0.35·(100 - SCS) + 0.1·NightPct)
               </div>
-              <div style="font-size:0.82rem; color:var(--text-muted); line-height:1.6;">
+              <div style="font-size:0.85rem; color:#000; font-weight:600; line-height:1.65;">
                 • <strong>HBR<sub>100</sub> (Harsh Braking Rate):</strong> Decelerations with a<sub>y</sub> ≤ -3.0 m/s² normalized per 100 km. Heavy weight (2.2) because sudden stopping on two-wheelers is the leading precursor to front-wheel lockup and rear-end collisions.<br>
                 • <strong>RAR<sub>100</sub> (Rapid Acceleration Rate):</strong> Accelerations with a<sub>y</sub> ≥ +2.8 m/s² per 100 km. Reflects aggressive throttle twisting, tire slippage, and high fuel/energy wastage.<br>
                 • <strong>HCR<sub>100</sub> (Harsh Cornering Rate):</strong> Lateral acceleration |a<sub>x</sub>| ≥ 3.0 m/s² or high yaw rate |gyro<sub>z</sub>| ≥ 40°/s at speed > 20 km/h. High weight because excessive lean at speed risks low-side crashes.<br>
@@ -463,14 +533,14 @@
               </div>
             </div>
 
-            <div style="background:#fafafa; border:2px solid #181c32; border-radius:8px; padding:1.25rem; box-shadow:3px 3px 0px #181c32;">
-              <h4 style="font-size:0.95rem; font-weight:800; margin-bottom:0.5rem; color:var(--boron-dark);">
+            <div style="background:#fdf6e2; border:2px solid #000; border-radius:8px; padding:1.25rem; box-shadow:3px 3px 0px #000;">
+              <h4 style="font-size:1rem; font-weight:900; margin-bottom:0.5rem; color:#000;">
                 2. Composite Vehicle Health Index (VHI) (0 - 100)
               </h4>
-              <div style="background:#fff; border:1.5px solid #181c32; padding:0.8rem 1rem; border-radius:6px; font-family:'JetBrains Mono', monospace; font-size:0.88rem; font-weight:700; color:var(--boron-dark); margin-bottom:0.8rem;">
+              <div style="background:#fff; border:2px solid #000; padding:0.8rem 1rem; border-radius:6px; font-family:'JetBrains Mono', monospace; font-size:0.88rem; font-weight:800; color:#000; margin-bottom:0.8rem; box-shadow:2px 2px 0px #000;">
                 VHI = 100 - (40·Norm(Vib<sub>RMS</sub>) + 25·Norm(Gyro<sub>Jitter</sub>) + 20·Norm(Brake<sub>Judder</sub>) + 10·Norm(Days<sub>Service</sub>) + 5·Norm(Odo<sub>KM</sub>))
               </div>
-              <div style="font-size:0.82rem; color:var(--text-muted); line-height:1.6;">
+              <div style="font-size:0.85rem; color:#000; font-weight:600; line-height:1.65;">
                 • <strong>Chassis Vibration RMS (Vib<sub>RMS</sub>):</strong> Root Mean Square of vertical acceleration deviation: √( 1/N · Σ (a<sub>z,t</sub> - 9.81)² ). Directly isolates suspension damper degradation, blown fork seals, and chassis fatigue.<br>
                 • <strong>Rotational Jitter (Gyro<sub>Jitter</sub>):</strong> Sum of σ(gyro<sub>x</sub>) + σ(gyro<sub>y</sub>) during straight cruising (v > 20 km/h, |a<sub>x</sub>| < 1.0 m/s²). Isolates steering head bearing play, rim bend, or unbalanced front tire wobble.<br>
                 • <strong>Braking Judder (Brake<sub>Judder</sub>):</strong> Vertical standard deviation during active braking (a<sub>y</sub> < -1.5 m/s²). Isolates warped brake rotors and glazed friction pads.<br>
@@ -479,12 +549,12 @@
             </div>
           </div>
 
-          <div class="boron-card">
-            <div class="boron-card-header">
+          <div class="neo-card">
+            <div class="neo-card-header">
               <h3><i data-lucide="shield-alert"></i> Key Telematics Assumptions & Sensor Calibration</h3>
-              <span class="boron-tag">Physics Constraints</span>
+              <span class="side-badge badge-yellow">Physics Constraints</span>
             </div>
-            <ul style="padding-left:1.25rem; font-size:0.85rem; color:var(--text-muted); line-height:1.7;">
+            <ul style="padding-left:1.25rem; font-size:0.88rem; color:#000; font-weight:600; line-height:1.75;">
               <li><strong>Phone Mount vs. Pocket Calibration:</strong> Mobile phone sensors mounted rigidly on handlebars capture true high-frequency chassis vibration (a<sub>z</sub>). Pocket-worn phones experience soft tissue damping. The scoring pipeline detects mount type and normalizes vibration coefficients accordingly.</li>
               <li><strong>Sampling Frequency & Aggregation:</strong> Minute-level telemetry captures 1-minute time windows. Dynamic G-spikes (a<sub>x</sub>, a<sub>y</sub>, a<sub>z</sub>) capture maximum sustained maneuver forces.</li>
               <li><strong>Gravity Compensation:</strong> Base gravity (9.81 m/s²) is subtracted from the orthogonal Z-axis vector to compute dynamic road shock.</li>
@@ -497,16 +567,16 @@
     </div>
   </div>
 
-  <!-- Boron Modal -->
-  <div class="boron-modal-backdrop" id="detail-modal">
-    <div class="boron-modal-box">
-      <div class="boron-modal-header">
+  <!-- Neobrutalism Modal -->
+  <div class="neo-modal-backdrop" id="detail-modal">
+    <div class="neo-modal-box">
+      <div class="neo-modal-header">
         <h3 id="modal-title">Telematics Profile</h3>
         <button class="modal-close-btn" onclick="closeModal()">
-          <i data-lucide="x" style="width:18px; height:18px; color:#fff;"></i>
+          <i data-lucide="x" style="width:18px; height:18px; color:#000;"></i>
         </button>
       </div>
-      <div class="boron-modal-body" id="modal-body">
+      <div class="neo-modal-body" id="modal-body">
         <!-- Injected via app.js -->
       </div>
     </div>

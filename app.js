@@ -15,6 +15,19 @@ let mapInstance = null;
 let mapPolyline = null;
 let mapMarkers = [];
 
+const NEO_COLORS = {
+  lime: '#a3e636',
+  blue: '#88aaee',
+  yellow: '#fde047',
+  red: '#ff6b6b',
+  purple: '#c4b5fd',
+  orange: '#fdba74',
+  teal: '#5eead4',
+  green: '#86efac',
+  black: '#000000',
+  white: '#ffffff'
+};
+
 document.addEventListener('DOMContentLoaded', async () => {
   await loadData();
   lucide.createIcons();
@@ -94,47 +107,47 @@ function updateHeaderTitles(tab) {
 function renderSummaryStrip() {
   const strip = document.getElementById('summary-strip');
   strip.innerHTML = `
-    <div class="boron-stat-card">
+    <div class="neo-stat-card">
       <div class="stat-content">
         <h4>Fleet Size</h4>
         <div class="stat-number">${fleetSummary.total_drivers || 30}</div>
         <div class="stat-sub">${fleetSummary.total_trips || 450} Trips Processed</div>
       </div>
-      <div class="stat-icon-wrapper yellow">
-        <i data-lucide="users" style="width:22px; height:22px; color:#181c32;"></i>
+      <div class="stat-icon-wrapper lime">
+        <i data-lucide="users" style="width:24px; height:24px; color:#000;"></i>
       </div>
     </div>
 
-    <div class="boron-stat-card">
+    <div class="neo-stat-card">
       <div class="stat-content">
         <h4>Avg Driver Safety</h4>
         <div class="stat-number">${fleetSummary.avg_driver_safety_score || 82.4}</div>
         <div class="stat-sub">${fleetSummary.safe_drivers_count || 19} Safe | ${fleetSummary.risky_drivers_count || 5} High Risk</div>
       </div>
       <div class="stat-icon-wrapper green">
-        <i data-lucide="shield-check" style="width:22px; height:22px; color:#181c32;"></i>
+        <i data-lucide="shield-check" style="width:24px; height:24px; color:#000;"></i>
       </div>
     </div>
 
-    <div class="boron-stat-card">
+    <div class="neo-stat-card">
       <div class="stat-content">
         <h4>Avg Vehicle Health</h4>
         <div class="stat-number">${fleetSummary.avg_vehicle_health_index || 79.1}</div>
         <div class="stat-sub">${fleetSummary.healthy_vehicles_count || 17} Healthy | ${fleetSummary.critical_vehicles_count || 6} Critical</div>
       </div>
       <div class="stat-icon-wrapper orange">
-        <i data-lucide="wrench" style="width:22px; height:22px; color:#181c32;"></i>
+        <i data-lucide="wrench" style="width:24px; height:24px; color:#000;"></i>
       </div>
     </div>
 
-    <div class="boron-stat-card">
+    <div class="neo-stat-card">
       <div class="stat-content">
         <h4>Weekly Distance</h4>
         <div class="stat-number">${fleetSummary.total_distance_km ? fleetSummary.total_distance_km.toLocaleString() : '5,842'} km</div>
         <div class="stat-sub">${fleetSummary.total_telemetry_points ? fleetSummary.total_telemetry_points.toLocaleString() : '11,666'} IMU Pts</div>
       </div>
       <div class="stat-icon-wrapper purple">
-        <i data-lucide="navigation" style="width:22px; height:22px; color:#fff;"></i>
+        <i data-lucide="navigation" style="width:24px; height:24px; color:#000;"></i>
       </div>
     </div>
   `;
@@ -212,7 +225,7 @@ function renderDriversList(drivers) {
     container.innerHTML = drivers.map(d => {
       const riskClass = d.Risk_Level.toLowerCase();
       return `
-        <div class="boron-entity-card" onclick="openDriverModal('${d.Driver_ID}')">
+        <div class="neo-entity-card" onclick="openDriverModal('${d.Driver_ID}')">
           <div class="entity-top">
             <div class="entity-name">
               <h3>${d.Driver_Name}</h3>
@@ -250,9 +263,9 @@ function renderDriversList(drivers) {
       `;
     }).join('');
   } else {
-    container.className = 'boron-table-wrapper';
+    container.className = 'neo-table-wrapper';
     container.innerHTML = `
-      <table class="boron-table">
+      <table class="neo-table">
         <thead>
           <tr>
             <th>Driver Name</th>
@@ -282,7 +295,7 @@ function renderDriversList(drivers) {
               <td>${d.Overspeed_50_Pct}%</td>
               <td><strong>${d.Safety_Score}</strong></td>
               <td>
-                <span class="side-badge ${d.Risk_Level === 'Low' ? 'badge-green' : d.Risk_Level === 'Medium' ? 'badge-orange' : 'badge-red'}">
+                <span class="side-badge ${d.Risk_Level === 'Low' ? 'badge-green' : d.Risk_Level === 'Medium' ? 'badge-yellow' : 'badge-red'}">
                   ${d.Risk_Level}
                 </span>
               </td>
@@ -307,26 +320,39 @@ function renderDriverCharts() {
       datasets: [{
         label: 'Driver Count',
         data: [safeD.length, modD.length, riskD.length],
-        backgroundColor: ['#51cf66', '#ffd43b', '#ff6b6b'],
-        borderColor: '#181c32',
+        backgroundColor: [NEO_COLORS.lime, NEO_COLORS.yellow, NEO_COLORS.red],
+        borderColor: NEO_COLORS.black,
         borderWidth: 2,
-        borderRadius: 6
+        borderRadius: 4
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { display: false }
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#ffffff',
+          titleColor: '#000000',
+          bodyColor: '#000000',
+          borderColor: '#000000',
+          borderWidth: 2,
+          boxShadow: '3px 3px 0px #000',
+          titleFont: { weight: 'bold' },
+          bodyFont: { weight: 'bold' },
+          padding: 10
+        }
       },
       scales: {
         y: {
-          grid: { color: '#e2e8f0' },
-          ticks: { color: '#181c32', font: { weight: 'bold' } }
+          grid: { color: 'rgba(0,0,0,0.06)' },
+          ticks: { color: '#000000', font: { weight: 'bold' } },
+          border: { color: '#000000', width: 2 }
         },
         x: {
           grid: { display: false },
-          ticks: { color: '#181c32', font: { weight: 'bold' } }
+          ticks: { color: '#000000', font: { weight: 'bold' } },
+          border: { color: '#000000', width: 2 }
         }
       }
     }
@@ -349,10 +375,13 @@ function renderDriverCharts() {
             avg(safeD, 'Overspeed_50_Pct'),
             avg(safeD, 'Night_Trip_Pct')
           ],
-          borderColor: '#181c32',
-          backgroundColor: 'rgba(81, 207, 102, 0.4)',
+          borderColor: '#000000',
+          backgroundColor: 'rgba(163, 230, 54, 0.65)',
           borderWidth: 2,
-          pointBackgroundColor: '#51cf66'
+          pointBackgroundColor: NEO_COLORS.lime,
+          pointBorderColor: '#000000',
+          pointBorderWidth: 2,
+          pointRadius: 5
         },
         {
           label: 'High Risk Cohort',
@@ -363,10 +392,13 @@ function renderDriverCharts() {
             avg(riskD, 'Overspeed_50_Pct'),
             avg(riskD, 'Night_Trip_Pct')
           ],
-          borderColor: '#181c32',
-          backgroundColor: 'rgba(255, 107, 107, 0.45)',
+          borderColor: '#000000',
+          backgroundColor: 'rgba(255, 107, 107, 0.65)',
           borderWidth: 2,
-          pointBackgroundColor: '#ff6b6b'
+          pointBackgroundColor: NEO_COLORS.red,
+          pointBorderColor: '#000000',
+          pointBorderWidth: 2,
+          pointRadius: 5
         }
       ]
     },
@@ -374,14 +406,23 @@ function renderDriverCharts() {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { labels: { color: '#181c32', font: { weight: 'bold' } } }
+        legend: { labels: { color: '#000000', font: { weight: 'bold', size: 12 } } },
+        tooltip: {
+          backgroundColor: '#ffffff',
+          titleColor: '#000000',
+          bodyColor: '#000000',
+          borderColor: '#000000',
+          borderWidth: 2,
+          titleFont: { weight: 'bold' },
+          bodyFont: { weight: 'bold' }
+        }
       },
       scales: {
         r: {
-          angleLines: { color: '#cbd5e1' },
-          grid: { color: '#e2e8f0' },
-          pointLabels: { color: '#181c32', font: { weight: 'bold', size: 11 } },
-          ticks: { backdropColor: '#fff', color: '#64748b' }
+          angleLines: { color: '#000000', lineWidth: 1.5 },
+          grid: { color: 'rgba(0,0,0,0.12)', lineWidth: 1.5 },
+          pointLabels: { color: '#000000', font: { weight: 'bold', size: 11 } },
+          ticks: { backdropColor: 'transparent', color: '#4b5563', font: { weight: 'bold' } }
         }
       }
     }
@@ -400,7 +441,7 @@ function renderVehiclesList(vehicles) {
     container.innerHTML = vehicles.map(v => {
       const urgencyClass = v.Urgency === 'Immediate' ? 'high' : v.Urgency === 'Medium' ? 'medium' : 'low';
       return `
-        <div class="boron-entity-card" onclick="openVehicleModal('${v.Vehicle_ID}')">
+        <div class="neo-entity-card" onclick="openVehicleModal('${v.Vehicle_ID}')">
           <div class="entity-top">
             <div class="entity-name">
               <h3>${v.Model}</h3>
@@ -438,9 +479,9 @@ function renderVehiclesList(vehicles) {
       `;
     }).join('');
   } else {
-    container.className = 'boron-table-wrapper';
+    container.className = 'neo-table-wrapper';
     container.innerHTML = `
-      <table class="boron-table">
+      <table class="neo-table">
         <thead>
           <tr>
             <th>Vehicle ID</th>
@@ -468,7 +509,7 @@ function renderVehiclesList(vehicles) {
               <td>${v.Braking_Judder}</td>
               <td><strong>${v.Health_Index}</strong></td>
               <td>
-                <span class="side-badge ${v.Urgency === 'Low' ? 'badge-green' : v.Urgency === 'Medium' ? 'badge-orange' : 'badge-red'}">
+                <span class="side-badge ${v.Urgency === 'Low' ? 'badge-green' : v.Urgency === 'Medium' ? 'badge-yellow' : 'badge-red'}">
                   ${v.Urgency}
                 </span>
               </td>
@@ -493,26 +534,26 @@ function renderVehicleCharts() {
         {
           label: 'Optimal Health',
           data: healthy.map(v => ({ x: v.Vibration_RMS, y: v.Gyro_Jitter, label: `${v.Vehicle_ID} (${v.Model})` })),
-          backgroundColor: '#51cf66',
-          borderColor: '#181c32',
-          borderWidth: 1.5,
-          pointRadius: 6
+          backgroundColor: NEO_COLORS.lime,
+          borderColor: '#000000',
+          borderWidth: 2,
+          pointRadius: 7
         },
         {
           label: 'Monitor / Service Due',
           data: monitor.map(v => ({ x: v.Vibration_RMS, y: v.Gyro_Jitter, label: `${v.Vehicle_ID} (${v.Model})` })),
-          backgroundColor: '#ffd43b',
-          borderColor: '#181c32',
-          borderWidth: 1.5,
-          pointRadius: 7
+          backgroundColor: NEO_COLORS.yellow,
+          borderColor: '#000000',
+          borderWidth: 2,
+          pointRadius: 8
         },
         {
           label: 'Critical Maintenance',
           data: critical.map(v => ({ x: v.Vibration_RMS, y: v.Gyro_Jitter, label: `${v.Vehicle_ID} (${v.Model})` })),
-          backgroundColor: '#ff6b6b',
-          borderColor: '#181c32',
-          borderWidth: 1.5,
-          pointRadius: 8
+          backgroundColor: NEO_COLORS.red,
+          borderColor: '#000000',
+          borderWidth: 2,
+          pointRadius: 9
         }
       ]
     },
@@ -520,8 +561,15 @@ function renderVehicleCharts() {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { labels: { color: '#181c32', font: { weight: 'bold' } } },
+        legend: { labels: { color: '#000000', font: { weight: 'bold', size: 11 } } },
         tooltip: {
+          backgroundColor: '#ffffff',
+          titleColor: '#000000',
+          bodyColor: '#000000',
+          borderColor: '#000000',
+          borderWidth: 2,
+          titleFont: { weight: 'bold' },
+          bodyFont: { weight: 'bold' },
           callbacks: {
             label: (ctx) => `${ctx.raw.label}: Vib RMS ${ctx.raw.x} m/s², Jitter ${ctx.raw.y} °/s`
           }
@@ -529,14 +577,16 @@ function renderVehicleCharts() {
       },
       scales: {
         x: {
-          title: { display: true, text: 'Chassis Vibration RMS (m/s²)', color: '#181c32', font: { weight: 'bold' } },
-          grid: { color: '#e2e8f0' },
-          ticks: { color: '#181c32' }
+          title: { display: true, text: 'Chassis Vibration RMS (m/s²)', color: '#000000', font: { weight: 'bold' } },
+          grid: { color: 'rgba(0,0,0,0.06)' },
+          ticks: { color: '#000000', font: { weight: 'bold' } },
+          border: { color: '#000000', width: 2 }
         },
         y: {
-          title: { display: true, text: 'Rotational Gyro Jitter (°/s)', color: '#181c32', font: { weight: 'bold' } },
-          grid: { color: '#e2e8f0' },
-          ticks: { color: '#181c32' }
+          title: { display: true, text: 'Rotational Gyro Jitter (°/s)', color: '#000000', font: { weight: 'bold' } },
+          grid: { color: 'rgba(0,0,0,0.06)' },
+          ticks: { color: '#000000', font: { weight: 'bold' } },
+          border: { color: '#000000', width: 2 }
         }
       }
     }
@@ -549,16 +599,25 @@ function renderVehicleCharts() {
       labels: ['Optimal Condition', 'Scheduled Service Due', 'Critical Maintenance'],
       datasets: [{
         data: [healthy.length, monitor.length, critical.length],
-        backgroundColor: ['#51cf66', '#ffd43b', '#ff6b6b'],
-        borderColor: '#181c32',
-        borderWidth: 2
+        backgroundColor: [NEO_COLORS.lime, NEO_COLORS.yellow, NEO_COLORS.red],
+        borderColor: '#000000',
+        borderWidth: 2.5
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { position: 'bottom', labels: { color: '#181c32', font: { weight: 'bold' }, padding: 12 } }
+        legend: { position: 'bottom', labels: { color: '#000000', font: { weight: 'bold', size: 11 }, padding: 12 } },
+        tooltip: {
+          backgroundColor: '#ffffff',
+          titleColor: '#000000',
+          bodyColor: '#000000',
+          borderColor: '#000000',
+          borderWidth: 2,
+          titleFont: { weight: 'bold' },
+          bodyFont: { weight: 'bold' }
+        }
       },
       cutout: '65%'
     }
@@ -582,24 +641,24 @@ function loadTripReplay(tripId) {
   banner.innerHTML = `
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1.5rem;">
       <div>
-        <div style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Selected Trip</div>
-        <div style="font-size:1.25rem; font-weight:900; color:var(--boron-dark); font-family:'JetBrains Mono', monospace;">${meta.Trip_ID}</div>
+        <div style="font-size:0.75rem; font-weight:900; color:var(--text-dim); text-transform:uppercase;">Selected Trip</div>
+        <div style="font-size:1.3rem; font-weight:900; color:#000; font-family:'JetBrains Mono', monospace;">${meta.Trip_ID}</div>
       </div>
       <div>
-        <div style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Driver / Vehicle</div>
-        <div style="font-size:0.95rem; font-weight:800; color:var(--boron-dark);">${meta.Driver_ID} / ${meta.Vehicle_ID}</div>
+        <div style="font-size:0.75rem; font-weight:900; color:var(--text-dim); text-transform:uppercase;">Driver / Vehicle</div>
+        <div style="font-size:0.95rem; font-weight:900; color:#000;">${meta.Driver_ID} / ${meta.Vehicle_ID}</div>
       </div>
       <div>
-        <div style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Mission Type</div>
-        <div style="font-size:0.95rem; font-weight:800; color:var(--boron-dark);">${meta.Trip_Type.replace(/_/g, ' ')}</div>
+        <div style="font-size:0.75rem; font-weight:900; color:var(--text-dim); text-transform:uppercase;">Mission Type</div>
+        <div style="font-size:0.95rem; font-weight:900; color:#000;">${meta.Trip_Type.replace(/_/g, ' ')}</div>
       </div>
       <div>
-        <div style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Distance / Time</div>
-        <div style="font-size:0.95rem; font-weight:800; color:var(--boron-dark);">${meta.Distance_KM} km / ${meta.Duration_Minutes} min</div>
+        <div style="font-size:0.75rem; font-weight:900; color:var(--text-dim); text-transform:uppercase;">Distance / Time</div>
+        <div style="font-size:0.95rem; font-weight:900; color:#000;">${meta.Distance_KM} km / ${meta.Duration_Minutes} min</div>
       </div>
       <div>
-        <div style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Avg / Max Speed</div>
-        <div style="font-size:0.95rem; font-weight:800; color:var(--boron-dark);">${meta.Avg_Speed_KMH} / ${meta.Max_Speed_KMH} km/h</div>
+        <div style="font-size:0.75rem; font-weight:900; color:var(--text-dim); text-transform:uppercase;">Avg / Max Speed</div>
+        <div style="font-size:0.95rem; font-weight:900; color:#000;">${meta.Avg_Speed_KMH} / ${meta.Max_Speed_KMH} km/h</div>
       </div>
     </div>
   `;
@@ -616,11 +675,11 @@ function loadTripReplay(tripId) {
   mapMarkers.forEach(m => mapInstance.removeLayer(m));
   mapMarkers = [];
 
-  mapPolyline = L.polyline(latlngs, { color: '#181c32', weight: 4, opacity: 0.9 }).addTo(mapInstance);
+  mapPolyline = L.polyline(latlngs, { color: '#000000', weight: 4, opacity: 0.95 }).addTo(mapInstance);
   mapInstance.fitBounds(mapPolyline.getBounds(), { padding: [30, 30] });
 
-  const startIcon = L.divIcon({ className: 'custom-pin-start', html: '<div style="background:#51cf66; width:14px; height:14px; border-radius:50%; border:2px solid #181c32; box-shadow:2px 2px 0px #181c32;"></div>' });
-  const endIcon = L.divIcon({ className: 'custom-pin-end', html: '<div style="background:#ff6b6b; width:14px; height:14px; border-radius:50%; border:2px solid #181c32; box-shadow:2px 2px 0px #181c32;"></div>' });
+  const startIcon = L.divIcon({ className: 'custom-pin-start', html: '<div style="background:#a3e636; width:15px; height:15px; border-radius:50%; border:2px solid #000; box-shadow:2px 2px 0px #000;"></div>' });
+  const endIcon = L.divIcon({ className: 'custom-pin-end', html: '<div style="background:#ff6b6b; width:15px; height:15px; border-radius:50%; border:2px solid #000; box-shadow:2px 2px 0px #000;"></div>' });
 
   mapMarkers.push(L.marker(latlngs[0], { icon: startIcon }).addTo(mapInstance).bindPopup('Trip Start'));
   mapMarkers.push(L.marker(latlngs[latlngs.length - 1], { icon: endIcon }).addTo(mapInstance).bindPopup('Trip End'));
@@ -630,10 +689,10 @@ function loadTripReplay(tripId) {
       const isHarshBrake = pt.Acceleration_Y <= -3.0;
       const marker = L.circleMarker([pt.Latitude, pt.Longitude], {
         radius: 7,
-        fillColor: isHarshBrake ? '#ff6b6b' : '#ffd43b',
-        color: '#181c32',
+        fillColor: isHarshBrake ? '#ff6b6b' : '#fde047',
+        color: '#000000',
         weight: 2,
-        fillOpacity: 0.95
+        fillOpacity: 1.0
       }).addTo(mapInstance);
       marker.bindPopup(`<strong>${isHarshBrake ? 'Harsh Brake Event' : 'High Vertical Shock'}</strong><br>Min ${pt.Minute_Offset}: Speed ${pt.Speed_KMH} km/h, Ay=${pt.Acceleration_Y} m/s², Az=${pt.Acceleration_Z} m/s²`);
       mapMarkers.push(marker);
@@ -662,19 +721,19 @@ function renderTripTelemetryCharts(telemetry) {
         {
           label: 'Speed (km/h)',
           data: speeds,
-          borderColor: '#181c32',
-          backgroundColor: 'rgba(77, 171, 247, 0.25)',
+          borderColor: '#000000',
+          backgroundColor: 'rgba(136, 170, 238, 0.45)',
           fill: true,
-          tension: 0.3,
-          borderWidth: 2,
+          tension: 0.2,
+          borderWidth: 2.5,
           yAxisID: 'y'
         },
         {
           label: 'Longitudinal Accel Ay (m/s²)',
           data: accY,
-          borderColor: '#ff922b',
-          tension: 0.3,
-          borderWidth: 2,
+          borderColor: '#fdba74',
+          tension: 0.2,
+          borderWidth: 2.5,
           yAxisID: 'y1'
         }
       ]
@@ -683,25 +742,40 @@ function renderTripTelemetryCharts(telemetry) {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { labels: { color: '#181c32', font: { weight: 'bold' } } }
+        legend: { labels: { color: '#000000', font: { weight: 'bold' } } },
+        tooltip: {
+          backgroundColor: '#ffffff',
+          titleColor: '#000000',
+          bodyColor: '#000000',
+          borderColor: '#000000',
+          borderWidth: 2,
+          titleFont: { weight: 'bold' },
+          bodyFont: { weight: 'bold' }
+        }
       },
       scales: {
-        x: { grid: { color: '#e2e8f0' }, ticks: { color: '#181c32' } },
+        x: {
+          grid: { color: 'rgba(0,0,0,0.06)' },
+          ticks: { color: '#000000', font: { weight: 'bold' } },
+          border: { color: '#000000', width: 2 }
+        },
         y: {
           type: 'linear',
           display: true,
           position: 'left',
-          title: { display: true, text: 'Speed (km/h)', color: '#181c32', font: { weight: 'bold' } },
-          ticks: { color: '#181c32' },
-          grid: { color: '#e2e8f0' }
+          title: { display: true, text: 'Speed (km/h)', color: '#000000', font: { weight: 'bold' } },
+          ticks: { color: '#000000', font: { weight: 'bold' } },
+          grid: { color: 'rgba(0,0,0,0.06)' },
+          border: { color: '#000000', width: 2 }
         },
         y1: {
           type: 'linear',
           display: true,
           position: 'right',
-          title: { display: true, text: 'Accel Ay (m/s²)', color: '#ff922b', font: { weight: 'bold' } },
-          ticks: { color: '#ff922b' },
-          grid: { drawOnChartArea: false }
+          title: { display: true, text: 'Accel Ay (m/s²)', color: '#fdba74', font: { weight: 'bold' } },
+          ticks: { color: '#000000', font: { weight: 'bold' } },
+          grid: { drawOnChartArea: false },
+          border: { color: '#000000', width: 2 }
         }
       }
     }
@@ -715,20 +789,37 @@ function renderTripTelemetryCharts(telemetry) {
     data: {
       labels: labels,
       datasets: [
-        { label: 'Vertical Az (m/s²)', data: accZ, borderColor: '#cc5de8', borderWidth: 2, tension: 0.2 },
-        { label: 'Lateral Ax (m/s²)', data: accX, borderColor: '#20c997', borderWidth: 2, tension: 0.2 },
-        { label: 'Gyro Yaw Gz (°/s)', data: gyroZ, borderColor: '#ff6b6b', borderWidth: 2, tension: 0.2 }
+        { label: 'Vertical Az (m/s²)', data: accZ, borderColor: NEO_COLORS.purple, borderWidth: 2.5, tension: 0.2 },
+        { label: 'Lateral Ax (m/s²)', data: accX, borderColor: NEO_COLORS.lime, borderWidth: 2.5, tension: 0.2 },
+        { label: 'Gyro Yaw Gz (°/s)', data: gyroZ, borderColor: NEO_COLORS.red, borderWidth: 2.5, tension: 0.2 }
       ]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { labels: { color: '#181c32', font: { weight: 'bold' } } }
+        legend: { labels: { color: '#000000', font: { weight: 'bold' } } },
+        tooltip: {
+          backgroundColor: '#ffffff',
+          titleColor: '#000000',
+          bodyColor: '#000000',
+          borderColor: '#000000',
+          borderWidth: 2,
+          titleFont: { weight: 'bold' },
+          bodyFont: { weight: 'bold' }
+        }
       },
       scales: {
-        x: { grid: { color: '#e2e8f0' }, ticks: { color: '#181c32' } },
-        y: { grid: { color: '#e2e8f0' }, ticks: { color: '#181c32' } }
+        x: {
+          grid: { color: 'rgba(0,0,0,0.06)' },
+          ticks: { color: '#000000', font: { weight: 'bold' } },
+          border: { color: '#000000', width: 2 }
+        },
+        y: {
+          grid: { color: 'rgba(0,0,0,0.06)' },
+          ticks: { color: '#000000', font: { weight: 'bold' } },
+          border: { color: '#000000', width: 2 }
+        }
       }
     }
   });
@@ -746,8 +837,8 @@ function openDriverModal(driverId) {
   body.innerHTML = `
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
       <div>
-        <div style="font-size:1.15rem; font-weight:800; color:var(--boron-dark);">${d.Driver_Name}</div>
-        <div style="color:var(--text-muted); font-size:0.85rem; font-weight:600;">Age ${d.Age} • ${d.Experience_Years} Yrs Exp • ${d.Primary_Zone} Zone</div>
+        <div style="font-size:1.2rem; font-weight:900; color:#000;">${d.Driver_Name}</div>
+        <div style="color:var(--text-muted); font-size:0.85rem; font-weight:700;">Age ${d.Age} • ${d.Experience_Years} Yrs Exp • ${d.Primary_Zone} Zone</div>
       </div>
       <div class="neubrutal-badge ${d.Risk_Level.toLowerCase()}">
         <span class="badge-score-val">${d.Safety_Score}</span>
@@ -755,7 +846,7 @@ function openDriverModal(driverId) {
       </div>
     </div>
 
-    <div style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--boron-dark); margin-bottom:0.5rem;">
+    <div style="font-size:0.78rem; font-weight:900; text-transform:uppercase; color:#000; margin-bottom:0.5rem;">
       Telematics Risk Metrics (Normalized / 100km)
     </div>
     <div class="metrics-block" style="margin-bottom:1.25rem;">
@@ -767,10 +858,10 @@ function openDriverModal(driverId) {
       <div class="m-item"><span class="m-lbl">Night Trips Ratio</span><span class="m-val">${d.Night_Trip_Pct}%</span></div>
     </div>
 
-    <div style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--boron-dark); margin-bottom:0.5rem;">
+    <div style="font-size:0.78rem; font-weight:900; text-transform:uppercase; color:#000; margin-bottom:0.5rem;">
       Targeted Driver Coaching & Safety Plan
     </div>
-    <ul style="padding-left:1.25rem; font-size:0.85rem; font-weight:600; color:var(--text-muted); line-height:1.6;">
+    <ul style="padding-left:1.25rem; font-size:0.88rem; font-weight:700; color:var(--text-muted); line-height:1.65;">
       ${d.Coaching_Feedback.map(f => `<li>${f}</li>`).join('')}
     </ul>
   `;
@@ -790,8 +881,8 @@ function openVehicleModal(vehicleId) {
   body.innerHTML = `
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
       <div>
-        <div style="font-size:1.15rem; font-weight:800; color:var(--boron-dark);">${v.Model}</div>
-        <div style="color:var(--text-muted); font-size:0.85rem; font-weight:600;">${v.Vehicle_Type} • ${v.Manufacturing_Year} • ${v.Odometer_KM.toLocaleString()} km</div>
+        <div style="font-size:1.2rem; font-weight:900; color:#000;">${v.Model}</div>
+        <div style="color:var(--text-muted); font-size:0.85rem; font-weight:700;">${v.Vehicle_Type} • ${v.Manufacturing_Year} • ${v.Odometer_KM.toLocaleString()} km</div>
       </div>
       <div class="neubrutal-badge ${v.Urgency === 'Immediate' ? 'high' : v.Urgency === 'Medium' ? 'medium' : 'low'}">
         <span class="badge-score-val">${v.Health_Index}</span>
@@ -799,7 +890,7 @@ function openVehicleModal(vehicleId) {
       </div>
     </div>
 
-    <div style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--boron-dark); margin-bottom:0.5rem;">
+    <div style="font-size:0.78rem; font-weight:900; text-transform:uppercase; color:#000; margin-bottom:0.5rem;">
       Sensor Wear & Vibration Signatures
     </div>
     <div class="metrics-block" style="margin-bottom:1.25rem;">
@@ -811,10 +902,10 @@ function openVehicleModal(vehicleId) {
       <div class="m-item"><span class="m-lbl">Weekly Mileage</span><span class="m-val">${v.Total_Week_KM} km</span></div>
     </div>
 
-    <div style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--boron-dark); margin-bottom:0.5rem;">
+    <div style="font-size:0.78rem; font-weight:900; text-transform:uppercase; color:#000; margin-bottom:0.5rem;">
       Mechanical Root Cause & Maintenance Trigger
     </div>
-    <div style="background:#fafafa; border:2px solid #181c32; border-radius:6px; padding:0.9rem 1rem; font-size:0.85rem; font-weight:600; line-height:1.5; color:var(--boron-dark);">
+    <div style="background:#fdf6e2; border:2px solid #000; border-radius:6px; padding:0.95rem 1.1rem; font-size:0.88rem; font-weight:700; line-height:1.5; color:#000; box-shadow:2px 2px 0px #000;">
       ${v.Diagnosis}
     </div>
   `;
@@ -829,26 +920,26 @@ function showJustificationModal() {
 
   title.textContent = 'Telemetry Metric Formulas & Justifications';
   body.innerHTML = `
-    <div style="background:#fafafa; border:2px solid #181c32; border-radius:8px; padding:1.2rem; margin-bottom:1rem; box-shadow:3px 3px 0px #181c32;">
-      <h4 style="font-size:0.95rem; font-weight:800; color:var(--boron-dark); margin-bottom:0.4rem;">Driver Safety Score (0-100)</h4>
-      <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.5rem;">Weighted penalty model penalizing harsh driving maneuvers normalized per 100 km:</p>
-      <div style="background:#fff; border:1.5px solid #181c32; padding:0.6rem 0.8rem; border-radius:4px; font-family:'JetBrains Mono', monospace; font-size:0.82rem; font-weight:700; color:var(--boron-dark); margin-bottom:0.6rem;">
+    <div style="background:#fdf6e2; border:2px solid #000; border-radius:8px; padding:1.2rem; margin-bottom:1rem; box-shadow:3px 3px 0px #000;">
+      <h4 style="font-size:1rem; font-weight:900; color:#000; margin-bottom:0.4rem;">Driver Safety Score (0-100)</h4>
+      <p style="font-size:0.85rem; color:var(--text-muted); font-weight:600; margin-bottom:0.5rem;">Weighted penalty model penalizing harsh driving maneuvers normalized per 100 km:</p>
+      <div style="background:#fff; border:2px solid #000; padding:0.65rem 0.9rem; border-radius:4px; font-family:'JetBrains Mono', monospace; font-size:0.85rem; font-weight:800; color:#000; margin-bottom:0.6rem; box-shadow:2px 2px 0px #000;">
         Safety Score = 100 - (2.2·HBR + 1.8·RAR + 2.0·HCR + 0.35·OverspeedPen + 0.1·NightPct)
       </div>
-      <div style="font-size:0.8rem; color:var(--text-muted); line-height:1.5;">
+      <div style="font-size:0.82rem; color:#000; font-weight:600; line-height:1.55;">
         • <strong>HBR (Harsh Braking):</strong> ay ≤ -3.0 m/s² (Leading indicator of tailgating and crash risk)<br>
         • <strong>RAR (Rapid Accel):</strong> ay ≥ +2.8 m/s² (Indicates sudden throttle twists and tire slipping)<br>
         • <strong>HCR (Harsh Cornering):</strong> |ax| ≥ 3.0 m/s² or |gyro_z| ≥ 40°/s at speed > 20 km/h (Risk of low-side slide)
       </div>
     </div>
 
-    <div style="background:#fafafa; border:2px solid #181c32; border-radius:8px; padding:1.2rem; box-shadow:3px 3px 0px #181c32;">
-      <h4 style="font-size:0.95rem; font-weight:800; color:var(--boron-dark); margin-bottom:0.4rem;">Vehicle Health Index (0-100)</h4>
-      <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.5rem;">Multi-sensor physical degradation index isolating mechanical sub-systems:</p>
-      <div style="background:#fff; border:1.5px solid #181c32; padding:0.6rem 0.8rem; border-radius:4px; font-family:'JetBrains Mono', monospace; font-size:0.82rem; font-weight:700; color:var(--boron-dark); margin-bottom:0.6rem;">
+    <div style="background:#fdf6e2; border:2px solid #000; border-radius:8px; padding:1.2rem; box-shadow:3px 3px 0px #000;">
+      <h4 style="font-size:1rem; font-weight:900; color:#000; margin-bottom:0.4rem;">Vehicle Health Index (0-100)</h4>
+      <p style="font-size:0.85rem; color:var(--text-muted); font-weight:600; margin-bottom:0.5rem;">Multi-sensor physical degradation index isolating mechanical sub-systems:</p>
+      <div style="background:#fff; border:2px solid #000; padding:0.65rem 0.9rem; border-radius:4px; font-family:'JetBrains Mono', monospace; font-size:0.85rem; font-weight:800; color:#000; margin-bottom:0.6rem; box-shadow:2px 2px 0px #000;">
         VHI = 100 - (40·Norm(Vib_RMS) + 25·Norm(Gyro_Jitter) + 20·Norm(Brake_Judder) + 10·Norm(Days_Svc) + 5·Norm(Odo))
       </div>
-      <div style="font-size:0.8rem; color:var(--text-muted); line-height:1.5;">
+      <div style="font-size:0.82rem; color:#000; font-weight:600; line-height:1.55;">
         • <strong>Vibration RMS:</strong> √(1/N Σ(az - 9.81)²) isolates suspension dampening and shock leaks.<br>
         • <strong>Gyro Jitter:</strong> σ(gx)+σ(gy) during cruising isolates wheel bearing and alignment defect.<br>
         • <strong>Brake Judder:</strong> σ(az) during braking isolates warped brake discs and glazed pads.
