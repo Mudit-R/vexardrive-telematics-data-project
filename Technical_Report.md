@@ -165,7 +165,7 @@ $$\text{VHI} = 100 - \left(40 \cdot \text{Norm}(\text{Vib}_{\text{RMS}}) + 25 \c
 ### 6. Repository Architecture & Quickstart Instructions
 
 ```
-vexardrive-technologies/
+vexardrive-telematics-data-project/
 ├── Drivers.csv                 # 30 Master Driver Records
 ├── Vehicles.csv                # 30 Master Vehicle Records
 ├── Trips.csv                   # 450 Trip Summaries
@@ -173,8 +173,8 @@ vexardrive-technologies/
 ├── generate_data.py            # Synthetic Physics Telematics Generator
 ├── process_telematics.py       # Feature Extraction, Risk Scoring & Health Modeling
 ├── server.py                   # Lightweight Dashboard HTTP Server
-├── index.html                  # Responsive Web Dashboard UI
-├── style.css                   # Dark-Mode Styling & Glassmorphic Components
+├── index.html                  # Interactive Web Dashboard Interface
+├── style.css                   # Neobrutalist UI Styling
 ├── app.js                      # Chart.js, Leaflet GIS, & Modal Controllers
 ├── processed_drivers.json      # Precomputed Driver Scorecards
 ├── processed_vehicles.json     # Precomputed Vehicle Health Metrics

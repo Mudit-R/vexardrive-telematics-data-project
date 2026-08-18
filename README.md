@@ -1,6 +1,6 @@
-# 🏍️ VexarDrive Technologies — Fleet Telematics & Predictive Analytics Platform
+# VexarDrive Technologies - Fleet Telematics & Predictive Analytics Platform
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-brightgreen?style=for-the-badge&logo=github)](https://mudit-r.github.io/vexardrive-telematics-analytics/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-brightgreen?style=for-the-badge&logo=github)](https://mudit-r.github.io/vexardrive-telematics-data-project/)
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg?style=for-the-badge&logo=python)](https://python.org)
 [![Chart.js](https://img.shields.io/badge/Charts-Chart.js%20v4.4-FF6384?style=for-the-badge&logo=chartdotjs)](https://www.chartjs.org/)
 [![Leaflet](https://img.shields.io/badge/Maps-Leaflet.js%20v1.9-199900?style=for-the-badge&logo=leaflet)](https://leafletjs.com/)
@@ -10,7 +10,7 @@ An end-to-end fleet telematics intelligence and predictive maintenance solution 
 
 ---
 
-## 📸 Platform Previews
+## Platform Previews
 
 | Driver Safety Intelligence | Vehicle Predictive Diagnostics |
 | :---: | :---: |
@@ -26,14 +26,14 @@ An end-to-end fleet telematics intelligence and predictive maintenance solution 
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
-### 1. 🛡️ Driver Behaviour & Safety Intelligence
-- **Composite Safety Risk Scoring (0–100)**: Mathematically calibrated scoring engine incorporating overspeeding, harsh deceleration ($G_y < -0.35g$), rapid acceleration ($G_y > +0.30g$), and high-lean cornering ($G_x > 0.40g$ / Roll Rate $> 25^\circ/\text{s}$).
+### 1. Driver Behaviour & Safety Intelligence
+- **Composite Safety Risk Scoring (0-100)**: Mathematically calibrated scoring engine incorporating overspeeding, harsh deceleration ($G_y < -0.35g$), rapid acceleration ($G_y > +0.30g$), and high-lean cornering ($G_x > 0.40g$ / Roll Rate $> 25^\circ/\text{s}$).
 - **Driver Cohort Clustering**: Categorizes drivers into `Exemplary (90-100)`, `Moderate (75-89)`, `Elevated Risk (60-74)`, and `Severe Risk (<60)`.
 - **Targeted Automated Coaching**: Context-aware recommendations for safety and fuel/battery optimization based on individual violation vectors.
 
-### 2. 🔧 Vehicle Health Status & Predictive Maintenance
+### 2. Vehicle Health Status & Predictive Maintenance
 - **Sub-System Vibration Spectral Analysis**: Isolates mechanical failures by evaluating vertical shock RMS ($G_z$), gyroscopic yaw jitter ($\omega_z$), and brake deceleration stability.
 - **Component-Level Diagnostics**:
   - **Suspension / Shock Absorbers**: Vertical shock threshold exceeding $1.6g$ RMS indicates worn damping fluid or compromised springs.
@@ -41,13 +41,13 @@ An end-to-end fleet telematics intelligence and predictive maintenance solution 
   - **Braking System**: Deceleration jerk and IMU fluctuation during deceleration detect warped brake rotors.
 - **RUL (Remaining Useful Life) & Maintenance Priority**: Multi-factor urgency matrix (`Immediate Grounding`, `Schedule Service <7 Days`, `Inspect at Next Interval`, `Optimal`).
 
-### 3. 🗺️ Interactive GIS Mapping & Sensor Waveforms
+### 3. Interactive GIS Mapping & Sensor Waveforms
 - **Synchronized GPS Breadcrumbs & Heatmaps**: Route-by-route replay color-coded by vehicle speed and violation events.
 - **Tri-Axial Waveform Inspection**: Zoomable Chart.js timelines showing raw $G_x, G_y, G_z$ acceleration and $\omega_x, \omega_y, \omega_z$ angular velocities.
 - **Crowdsourced Pothole & Road Roughness GIS Heatmap**: Automatically tags road surface anomalies when vertical impact $|G_z| > 2.2g$.
 
-### 4. 💡 Strategic Enterprise Data Monetization Roadmap
-- **Usage-Based Insurance (UBI)**: Actuarial tiering for 15–30% policy premium discounts.
+### 4. Strategic Enterprise Data Monetization Roadmap
+- **Usage-Based Insurance (UBI)**: Actuarial tiering for 15-30% policy premium discounts.
 - **Government Infrastructure Intelligence (B2G)**: Road condition index and pothole hotspot licensing for municipal road authorities.
 - **Micro-ETA & Dynamic Dispatch**: Real-time traffic acceleration friction modeling for on-demand logistics.
 - **EV Battery Longevity Optimization**: High-frequency discharge thermal stress prevention.
@@ -55,7 +55,7 @@ An end-to-end fleet telematics intelligence and predictive maintenance solution 
 
 ---
 
-## 📊 Dataset Architecture & Schema
+## Dataset Architecture & Schema
 
 ```
 +------------------+         +-------------------+         +---------------------+
@@ -98,15 +98,15 @@ An end-to-end fleet telematics intelligence and predictive maintenance solution 
 
 ---
 
-## 🛠️ Quick Start & Local Execution
+## Quick Start & Local Execution
 
 ### Prerequisites
 - Python 3.8+ (no external heavy libraries required; uses standard libraries `csv`, `json`, `math`, `http.server`, etc.)
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/Mudit-R/vexardrive-telematics-analytics.git
-cd vexardrive-telematics-analytics
+git clone https://github.com/Mudit-R/vexardrive-telematics-data-project.git
+cd vexardrive-telematics-data-project
 ```
 
 ### 2. (Optional) Re-run Data Generation & Telematics Pipeline
@@ -126,10 +126,10 @@ Open **[http://localhost:8080](http://localhost:8080)** in your browser.
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
-vexardrive-telematics-analytics/
+vexardrive-telematics-data-project/
 ├── .gitignore                   # Git ignore patterns
 ├── README.md                    # Project overview and documentation
 ├── Technical_Report.md          # Comprehensive data science evaluation report
@@ -138,7 +138,7 @@ vexardrive-telematics-analytics/
 ├── process_telematics.py        # Telematics ETL, scoring & diagnostic pipeline
 ├── server.py                    # Lightweight development HTTP server
 ├── index.html                   # Interactive web dashboard interface
-├── style.css                    # Modern neubrutalist/dark UI styling
+├── style.css                    # Neobrutalist UI styling
 ├── app.js                       # Dashboard state, charts & map handlers
 ├── Drivers.csv                  # Driver profile records
 ├── Vehicles.csv                 # Fleet vehicle specifications & status
@@ -161,14 +161,14 @@ vexardrive-telematics-analytics/
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 **Mudit R**  
-- 🌐 [GitHub Profile](https://github.com/Mudit-R)  
-- 💼 [Wellfound Profile](https://wellfound.com/u/mudit-rungta)  
-- ✉️ Email: `mudit14127@gmail.com`
+- [GitHub Profile](https://github.com/Mudit-R)  
+- [Wellfound Profile](https://wellfound.com/u/mudit-rungta)  
+- Email: `mudit14127@gmail.com`
 
 ---
 
-## 📜 License
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
